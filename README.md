@@ -38,16 +38,16 @@ yo quality-npm-package
 
 ## Getting To Know Yeoman
 
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
+- Yeoman has a heart of gold.
+- Yeoman is a person with feelings and opinions, but is very easy to work with.
+- Yeoman can be too opinionated at times but is easily convinced not to be.
+- Feel free to [learn more about Yeoman](http://yeoman.io/).
 
 ## Author
 
 👤 **Cristopher Jiménez**
 
-* Github: [@cristopher1](https://github.com/cristopher1)
+- Github: [@cristopher1](https://github.com/cristopher1)
 
 ## 🤝 Contributing
 
@@ -62,5 +62,6 @@ Give a ⭐️ if this project helped you!
 Copyright © 2023 [Cristopher Jiménez](https://github.com/cristopher1).<br />
 This project is [MIT](https://github.com/cristopher1/generator-quality-npm-package/blob/master/LICENSE) licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
