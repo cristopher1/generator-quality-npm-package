@@ -1,8 +1,8 @@
-import { Generator } from 'yeoman-generator'
-import { chalk } from 'chalk'
-import { yosay } from 'yosay'
+import Generator from 'yeoman-generator'
+import chalk from 'chalk'
+import yosay from 'yosay'
 
-module.exports = class extends Generator {
+export default class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
     this.log(
@@ -36,6 +36,6 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this.installDependencies()
+    this.addDependencies({ jest: '29.0.0' })
   }
 }

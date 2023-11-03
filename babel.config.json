@@ -1,17 +1,5 @@
 {
   "env": {
-    "test": {
-      "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "targets": {
-              "node": "current"
-            }
-          }
-        ]
-      ]
-    },
     "buildCommonJS": {
       "presets": ["@babel/preset-env"],
       "comments": false,

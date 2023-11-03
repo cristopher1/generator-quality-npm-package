@@ -1,7 +1,9 @@
-'use strict'
-const path = require('path')
-const assert = require('yeoman-assert')
-const helpers = require('yeoman-test')
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import assert from 'yeoman-assert'
+import helpers from 'yeoman-test'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('generator-quality-npm-package:app', () => {
   beforeAll(() => {

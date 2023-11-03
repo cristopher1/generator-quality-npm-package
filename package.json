@@ -11,6 +11,7 @@
   "files": [
     "generators"
   ],
+  "type": "module",
   "main": "generators/index.js",
   "keywords": [
     "yeoman-generator",
@@ -65,6 +66,44 @@
     "yeoman-generator": "^7.1.0",
     "yosay": "^2.0.2"
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "standard",
+      "prettier"
+    ],
+    "overrides": [
+      {
+        "env": {
+          "node": true
+        },
+        "files": [".eslintrc.{js,cjs}"],
+        "parserOptions": {
+          "sourceType": "script"
+        }
+      },
+      {
+        "files": ["src/**/*.js"],
+        "extends": ["xo"]
+      },
+      {
+        "env": {
+          "node": true
+        },
+        "files": ["__tests__/**/*.js"],
+        "extends": ["plugin:jest/recommended"],
+        "plugins": ["jest"]
+      }
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    }
+  },
   "scripts": {
     "init:husky": "husky install",
     "documentation:create": "npx readme-md-generator -y",
@@ -81,7 +120,7 @@
     "build:bundle": "rollup --config",
     "prebuild": "npm run lint:build-stage && npm run format:build-stage:fix && npm run build:clean",
     "build": "npm run build:bundle",
-    "test": "jest --verbose",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
     "commitlint": "npx commitlint --edit",
     "lint-staged": "npx lint-staged",
     "prepublishOnly": "npm run build",
