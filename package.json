@@ -114,7 +114,7 @@
     "format:build-stage": "prettier --check src",
     "format:build-stage:fix": "prettier --write src",
     "lint": "eslint --ext .js,.mjs .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- -c package.json --no-eslintrc --fix",
     "lint:build-stage": "eslint --ext .js,.mjs src",
     "lint:build-stage:fix": "npm run lint:build-stage -- --fix",
     "build:clean": "rimraf dist",
