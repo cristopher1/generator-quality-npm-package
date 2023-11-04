@@ -50,6 +50,7 @@
     "jest": "^29.7.0",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.2",
+    "prettier-plugin-jsdoc": "^1.1.1",
     "readme-md-generator": "^1.0.0",
     "rimraf": "^5.0.1",
     "rollup": "^3.28.0",
@@ -81,34 +82,22 @@
         "env": {
           "node": true
         },
-        "files": [
-          ".eslintrc.{js,cjs}"
-        ],
+        "files": [".eslintrc.{js,cjs}"],
         "parserOptions": {
           "sourceType": "script"
         }
       },
       {
-        "files": [
-          "src/**/*.js"
-        ],
-        "extends": [
-          "xo"
-        ]
+        "files": ["src/**/*.js"],
+        "extends": ["xo"]
       },
       {
         "env": {
           "node": true
         },
-        "files": [
-          "__tests__/**/*.js"
-        ],
-        "extends": [
-          "plugin:jest/recommended"
-        ],
-        "plugins": [
-          "jest"
-        ]
+        "files": ["__tests__/**/*.js"],
+        "extends": ["plugin:jest/recommended"],
+        "plugins": ["jest"]
       }
     ],
     "parserOptions": {
