@@ -71,7 +71,7 @@ export default class extends Generator {
   writing() {
     // Copy all files. It does not include the dotfiles
     this.fs.copy(
-      this.templatePath('common_xtructure/**/*'),
+      this.templatePath('common_structure/**/*'),
       this.destinationPath(''),
     )
 
