@@ -81,22 +81,34 @@
         "env": {
           "node": true
         },
-        "files": [".eslintrc.{js,cjs}"],
+        "files": [
+          ".eslintrc.{js,cjs}"
+        ],
         "parserOptions": {
           "sourceType": "script"
         }
       },
       {
-        "files": ["src/**/*.js"],
-        "extends": ["xo"]
+        "files": [
+          "src/**/*.js"
+        ],
+        "extends": [
+          "xo"
+        ]
       },
       {
         "env": {
           "node": true
         },
-        "files": ["__tests__/**/*.js"],
-        "extends": ["plugin:jest/recommended"],
-        "plugins": ["jest"]
+        "files": [
+          "__tests__/**/*.js"
+        ],
+        "extends": [
+          "plugin:jest/recommended"
+        ],
+        "plugins": [
+          "jest"
+        ]
       }
     ],
     "parserOptions": {
