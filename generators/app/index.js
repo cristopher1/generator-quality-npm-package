@@ -62,10 +62,26 @@ export default class extends Generator {
         message: 'Your website',
         default: '',
       },
+      {
+        type: 'list',
+        name: 'importType',
+        message:
+          'Do you want to use the field type:commonjs or type:module into package.json',
+        choices: [
+          {
+            name: 'commonjs',
+            value: 'commonjs',
+          },
+          {
+            name: 'esmodule',
+            value: 'esmodule',
+          },
+        ],
+        default: 'commonjs',
+      },
     ]
 
-    const answers = await this.prompt(prompts)
-    return answers
+    this.answers = await this.prompt(prompts)
   }
 
   writing() {
@@ -78,6 +94,21 @@ export default class extends Generator {
     // Copy all dotfiles.
     this.fs.copy(
       this.templatePath('common_structure/.*'),
+      this.destinationPath(''),
+    )
+
+    // Obtain the files and directories specified by the field type into package.json
+    const importType = this.answers.importType
+
+    // Copy all files. It does not include the dotfiles
+    this.fs.copy(
+      this.templatePath(`${importType}/**/*`),
+      this.destinationPath(''),
+    )
+
+    // Copy all dotfiles.
+    this.fs.copy(
+      this.templatePath(`${importType}/.*`),
       this.destinationPath(''),
     )
   }
