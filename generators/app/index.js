@@ -12,6 +12,60 @@ export default class extends Generator {
         )} generator!`,
       ),
     )
+
+    const prompts = [
+      {
+        type: 'input',
+        name: 'projectName',
+        message: "Project's name",
+        default: this.appname,
+      },
+      {
+        type: 'input',
+        name: 'projectDescription',
+        message: "Project's description",
+        default: '',
+      },
+      {
+        type: 'input',
+        name: 'projectHomePageUrl',
+        message: 'Project homepage url',
+        default: '',
+      },
+      {
+        type: 'input',
+        name: 'authorName',
+        message: "Author's name",
+        default: '',
+      },
+      {
+        type: 'input',
+        name: 'authorEmail',
+        message: "Author's email",
+        default: '',
+      },
+      {
+        type: 'input',
+        name: 'authorHomePage',
+        message: "Author's homepage",
+        default: '',
+      },
+      {
+        type: 'input',
+        name: 'packageKeywords',
+        message: 'Package keywords (comman to split)',
+        default: '',
+      },
+      {
+        type: 'input',
+        name: 'yourWebSite',
+        message: 'Your website',
+        default: '',
+      },
+    ]
+
+    const answers = await this.prompt(prompts)
+    return answers
   }
 
   writing() {
