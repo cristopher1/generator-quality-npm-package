@@ -73,8 +73,8 @@ export default class extends Generator {
             value: 'commonjs',
           },
           {
-            name: 'esmodule',
-            value: 'esmodule',
+            name: 'esmodules',
+            value: 'esmodules',
           },
         ],
         default: 'commonjs',
