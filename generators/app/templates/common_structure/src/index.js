@@ -9,7 +9,7 @@
  *   console.log(greeting)
  *
  * @param {string} string A string used to generate the message.
- * @returns {string}
+ * @returns {string} A string that contains the hello word.
  */
 const getGreeting = (string) => `hello ${string}`
 
