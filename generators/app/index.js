@@ -50,12 +50,12 @@ export default class extends Generator {
     this.#copyNormalFilesAndDirectories(rootDir)
   }
 
-  #RunGitInit() {
-    console.log('\n********** Run git init command **********')
+  #runGitInit() {
+    console.log('\n********** Run git init command **********\n')
     this.spawnSync('git', ['init'])
   }
 
-  #ObtainDependencyManager(dependencyManagers) {
+  #obtainDependencyManager(dependencyManagers) {
     for (const dependencyManager of dependencyManagers) {
       this.log(`Find ${dependencyManager}`)
       const isAvailable = this.#dependencyManagerAvailable(dependencyManager)
@@ -74,10 +74,30 @@ export default class extends Generator {
     }
   }
 
-  #RunPackageJsonScripts(dependencyManager) {
+  #runPackageJsonScripts(dependencyManager) {
     console.log('\n********** Run scripts from package.json **********')
-    this.spawnSync(`${dependencyManager}`, ['run', 'init'])
-    this.spawnSync(`${dependencyManager}`, ['run', 'documentation:create'])
+    const scriptArguments = [
+      ['init'],
+      ['documentation:create'],
+      ['test'],
+      ['build'],
+    ]
+    for (const args of scriptArguments)
+      this.spawnSync(`${dependencyManager}`, ['run', ...args])
+  }
+
+  #runGoodBye() {
+    this.log('\n')
+    this.log('****************************************************')
+    this.log('****************************************************')
+    this.log('********                                    ********')
+    this.log('******    Thanks for to use this generator    ******')
+    this.log('****                                            ****')
+    this.log('******     The project structure is ready     ******')
+    this.log('********                                    ********')
+    this.log('****************************************************')
+    this.log('****************************************************')
+    this.log('\n')
   }
 
   async prompting() {
@@ -229,11 +249,13 @@ export default class extends Generator {
     if (runCommands) {
       const dependencyManagers = ['yarn', 'npm']
       const dependencyManager =
-        this.#ObtainDependencyManager(dependencyManagers)
+        this.#obtainDependencyManager(dependencyManagers)
       this.log(`using ${dependencyManager}`)
 
-      this.#RunGitInit()
-      this.#RunPackageJsonScripts(dependencyManager)
+      this.#runGitInit()
+      this.#runPackageJsonScripts(dependencyManager)
     }
+
+    this.#runGoodBye()
   }
 }
