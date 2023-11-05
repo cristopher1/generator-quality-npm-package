@@ -52,7 +52,7 @@ export default class extends Generator {
   }
 
   #RunGitInit() {
-    console.log('***** Run git init command *****')
+    console.log('\n********** Run git init command **********')
     this.spawnSync('git', ['init'])
   }
 
@@ -76,7 +76,7 @@ export default class extends Generator {
   }
 
   #RunPackageJsonScripts(dependencyManager) {
-    console.log('***** Run scripts from package.json *****')
+    console.log('\n********** Run scripts from package.json **********')
     this.spawnSync(`${dependencyManager}`, ['run', 'init'])
     this.spawnSync(`${dependencyManager}`, ['run', 'documentation:create'])
   }
@@ -155,7 +155,6 @@ export default class extends Generator {
             value: 'esmodules',
           },
         ],
-        default: 'commonjs',
       },
       {
         type: 'list',
@@ -172,7 +171,6 @@ export default class extends Generator {
             value: false,
           },
         ],
-        default: true,
       },
     ]
 
