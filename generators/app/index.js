@@ -49,7 +49,6 @@ export default class extends Generator {
 
   #copyEsModuleContent(rootDir) {
     this.#copyNormalFilesAndDirectories(rootDir)
-    this.#copyDotFiles(rootDir)
   }
 
   #RunGitInit() {
