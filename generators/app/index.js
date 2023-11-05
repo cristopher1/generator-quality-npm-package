@@ -44,7 +44,6 @@ export default class extends Generator {
 
   #copyCommonjsContent(rootDir) {
     this.#copyNormalFilesAndDirectories(rootDir)
-    this.#copyDotFiles(rootDir)
   }
 
   #copyEsModuleContent(rootDir) {
