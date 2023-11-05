@@ -1,3 +1,16 @@
-const getHello = (string) => `hello ${string}`
+/**
+ * A function to generate a message that includes the hello word.
+ *
+ * @example
+ *   const string = 'world'
+ *
+ *   const greeting = getGreeting(string)
+ *
+ *   console.log(greeting)
+ *
+ * @param {string} string A string used to generate the message.
+ * @returns {string}
+ */
+const getGreeting = (string) => `hello ${string}`
 
-export { getHello }
+export { getGreeting }
