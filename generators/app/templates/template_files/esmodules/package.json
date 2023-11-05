@@ -1,0 +1,104 @@
+{
+  "name": "<%= packageName %>",
+  "version": "1.0.0",
+  "description": "<%= packageDescription %>",
+  "main": "./dist/cjs/index.cjs",
+  "type": "<%= packageType %>",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
+  },
+  "files": [
+    "./dist"
+  ],
+  "author": {
+    "name": "<%= authorName %>",
+    "email": "<%= authorEmail %>",
+    "url": "<%= authorHomePage %>"
+  },
+  "scripts": {
+    "init:husky": "husky install",
+    "documentation:create": "npx readme-md-generator -y",
+    "init": "npm run init:husky",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "format:build-stage": "prettier --check src",
+    "format:build-stage:fix": "prettier --write src",
+    "lint": "eslint --ext .js,.mjs .",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:build-stage": "eslint --ext .js,.mjs src",
+    "lint:build-stage:fix": "npm run lint:build-stage -- --fix",
+    "build:clean": "rimraf dist",
+    "build:clean-dist-tmp": "rimraf dist/tmp",
+    "build:bundle": "rollup --config",
+    "build:tsc": "tsc",
+    "prebuild": "npm run lint:build-stage && npm run format:build-stage:fix && npm run build:clean",
+    "build": "npm run build:tsc && npm run build:bundle && npm run build:clean-dist-tmp",
+    "test": "jest --verbose",
+    "commitlint": "npx commitlint --edit",
+    "lint-staged": "npx lint-staged",
+    "prepublishOnly": "npm run build",
+    "quality-check": "npm run format && npm run lint && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristopher1/json-serializer-vue-localstorage-reactive.git"
+  },
+  "keywords": [
+    "wrapper",
+    "json-serializer",
+    "json-serializer-core",
+    "json-serializer-base-serializers",
+    "vue-localstorage-reactive",
+    "local",
+    "storage",
+    "serialize",
+    "unserialize",
+    "serializer"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cristopher1/json-serializer-vue-localstorage-reactive/issues"
+  },
+  "homepage": "https://github.com/cristopher1/json-serializer-vue-localstorage-reactive#readme",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": ["eslint:recommended", "standard", "prettier"],
+    "overrides": [
+      {
+        "env": {
+          "node": true
+        },
+        "files": [".eslintrc.{js,cjs}"],
+        "parserOptions": {
+          "sourceType": "script"
+        }
+      },
+      {
+        "files": ["src/**/*.js"],
+        "extends": ["plugin:jsdoc/recommended"],
+        "plugins": ["jsdoc"],
+        "rules": {
+          "jsdoc/tag-lines": 0
+        }
+      },
+      {
+        "env": {
+          "node": true
+        },
+        "files": ["__tests__/**/*.js"],
+        "extends": ["plugin:jest/recommended"],
+        "plugins": ["jest"]
+      }
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    }
+  }
+}

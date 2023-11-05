@@ -3,6 +3,84 @@ import chalk from 'chalk'
 import yosay from 'yosay'
 
 export default class extends Generator {
+  #copyNormalFilesAndDirectories(src, dst = '') {
+    // Copy all directories. It does not include the dotfiles.
+    this.fs.copy(this.templatePath(`${src}/**/*`), this.destinationPath(dst))
+  }
+
+  #copyDotFiles(src, dst = '') {
+    // Copy all directories. It includes the dotfiles.
+    this.fs.copy(this.templatePath(`${src}/**/.*`), this.destinationPath(dst))
+  }
+
+  #copyDotDirectories(src, dst = '') {
+    // Copy all dotdirectories. It does not include the dotfiles.
+    this.fs.copy(this.templatePath(`${src}/.**/*`), this.destinationPath(dst))
+  }
+
+  #copyNormalTemplates(src, templateData, dts = '') {
+    this.fs.copyTpl(
+      this.templatePath(`${src}/**/*`),
+      this.destinationPath(dts),
+      templateData,
+    )
+  }
+
+  #copyCommonStructureContent(rootDir) {
+    this.#copyNormalFilesAndDirectories(rootDir)
+    this.#copyDotFiles(rootDir)
+    this.#copyDotDirectories(rootDir)
+  }
+
+  #copyTypePackageContent(packageType) {
+    switch (packageType) {
+      case 'esmodules':
+        this.#copyEsModuleContent(packageType)
+        break
+      default:
+        this.#copyCommonjsContent(packageType)
+    }
+  }
+
+  #copyCommonjsContent(rootDir) {
+    this.#copyNormalFilesAndDirectories(rootDir)
+    this.#copyDotFiles(rootDir)
+  }
+
+  #copyEsModuleContent(rootDir) {
+    this.#copyNormalFilesAndDirectories(rootDir)
+  }
+
+  #RunGitInit() {
+    console.log('***** Run git init command *****')
+    this.spawnSync('git', ['init'])
+  }
+
+  #ObtainDependencyManager(dependencyManagers) {
+    for (const dependencyManager of dependencyManagers) {
+      this.log(`Find ${dependencyManager}`)
+      const isAvailable = this.#dependencyManagerAvailable(dependencyManager)
+      if (isAvailable) {
+        return dependencyManager
+      }
+    }
+  }
+
+  #dependencyManagerAvailable(name) {
+    try {
+      this.spawnSync(`${name}`, ['--version'])
+      return true
+    } catch (err) {
+      return false
+    }
+  }
+
+  #RunPackageJsonScripts(dependencyManager) {
+    console.log('***** Run scripts from package.json *****')
+    this.spawnSync(`${dependencyManager}`, ['run', 'init'])
+    this.spawnSync(`${dependencyManager}`, ['run', 'documentation:create'])
+  }
+
   async prompting() {
     // Have Yeoman greet the user.
     this.log(
@@ -16,19 +94,19 @@ export default class extends Generator {
     const prompts = [
       {
         type: 'input',
-        name: 'projectName',
+        name: 'packageName',
         message: "Project's name",
         default: this.appname,
       },
       {
         type: 'input',
-        name: 'projectDescription',
+        name: 'packageDescription',
         message: "Project's description",
         default: '',
       },
       {
         type: 'input',
-        name: 'projectHomePageUrl',
+        name: 'packageHomePageUrl',
         message: 'Project homepage url',
         default: '',
       },
@@ -64,7 +142,7 @@ export default class extends Generator {
       },
       {
         type: 'list',
-        name: 'importType',
+        name: 'packageType',
         message:
           'Do you want to use the field type:commonjs or type:module into package.json',
         choices: [
@@ -79,38 +157,37 @@ export default class extends Generator {
         ],
         default: 'commonjs',
       },
+      {
+        type: 'list',
+        name: 'runCommands',
+        message:
+          'Do you want to run some commands automatically to init the package. For example: git init, documentation:create, etc',
+        choices: [
+          {
+            name: 'yes',
+            value: true,
+          },
+          {
+            name: 'no',
+            value: false,
+          },
+        ],
+        default: true,
+      },
     ]
 
     this.answers = await this.prompt(prompts)
   }
 
   writing() {
-    // Copy all files. It does not include the dotfiles
-    this.fs.copy(
-      this.templatePath('common_structure/**/*'),
-      this.destinationPath(''),
-    )
+    const commonStructure = 'common_structure'
+    this.#copyCommonStructureContent(commonStructure)
 
-    // Copy all dotfiles.
-    this.fs.copy(
-      this.templatePath('common_structure/.*'),
-      this.destinationPath(''),
-    )
+    const { packageType } = this.answers
+    this.#copyTypePackageContent(packageType)
 
-    // Obtain the files and directories specified by the field type into package.json
-    const importType = this.answers.importType
-
-    // Copy all files. It does not include the dotfiles
-    this.fs.copy(
-      this.templatePath(`${importType}/**/*`),
-      this.destinationPath(''),
-    )
-
-    // Copy all dotfiles.
-    this.fs.copy(
-      this.templatePath(`${importType}/.*`),
-      this.destinationPath(''),
-    )
+    const templateFiles = `template_files/${packageType}`
+    this.#copyNormalTemplates(templateFiles, this.answers)
   }
 
   install() {
@@ -147,5 +224,19 @@ export default class extends Generator {
       'rollup-plugin-dts': '^6.1.0',
       typescript: '^5.2.2',
     })
+  }
+
+  end() {
+    const { runCommands } = this.answers
+
+    if (runCommands) {
+      const dependencyManagers = ['yarn', 'npm']
+      const dependencyManager =
+        this.#ObtainDependencyManager(dependencyManagers)
+      this.log(`using ${dependencyManager}`)
+
+      this.#RunGitInit()
+      this.#RunPackageJsonScripts(dependencyManager)
+    }
   }
 }
