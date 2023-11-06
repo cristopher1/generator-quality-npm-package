@@ -117,7 +117,10 @@
         ],
         "plugins": [
           "jest"
-        ]
+        ],
+        "rules": {
+          "jest/expect-expect": 0
+        }
       }
     ],
     "parserOptions": {
