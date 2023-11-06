@@ -8,7 +8,7 @@ overrides:
   [
     {
       env: { node: true },
-      files: ['generators/**/.eslintrc.{js,cjs}'],
+      files: ['**/.eslintrc.{js,cjs}'],
       parserOptions: { sourceType: 'script' },
     },
     {
