@@ -55,7 +55,7 @@ export default class extends Generator {
     this.spawnSync('git', ['init'])
   }
 
-  #obtainDependencyManager(dependencyManagers) {
+  #getDependencyManager(dependencyManagers) {
     for (const dependencyManager of dependencyManagers) {
       this.log(`Find ${dependencyManager}`)
       const isAvailable = this.#dependencyManagerAvailable(dependencyManager)
@@ -74,7 +74,7 @@ export default class extends Generator {
     }
   }
 
-  #runPackageJsonScripts(dependencyManager) {
+  #runPackageScripts(dependencyManager) {
     console.log('\n********** Run scripts from package.json **********')
     const scriptArguments = [
       ['init'],
@@ -178,9 +178,26 @@ export default class extends Generator {
       },
       {
         type: 'list',
-        name: 'runCommands',
+        name: 'runGitInit',
         message:
-          'Do you want to run some commands automatically to init the package. For example: git init, documentation:create, etc',
+          'Do you want to run git init automatically, then installing the dependencies',
+        choices: [
+          {
+            name: 'yes',
+            value: true,
+          },
+          {
+            name: 'no',
+            value: false,
+          },
+        ],
+        default: true,
+      },
+      {
+        type: 'list',
+        name: 'runPackageScripts',
+        message: `Do you want to run the package scripts that init,
+          test and build the package automatically, then installing the dependencies`,
         choices: [
           {
             name: 'yes',
@@ -212,16 +229,18 @@ export default class extends Generator {
   install() {}
 
   end() {
-    const { runCommands } = this.answers
+    const dependencyManagers = ['yarn', 'npm']
+    const { runGitInit, runPackageScripts } = this.answers
 
-    if (runCommands) {
-      const dependencyManagers = ['yarn', 'npm']
-      const dependencyManager =
-        this.#obtainDependencyManager(dependencyManagers)
+    if (runGitInit) {
+      this.#runGitInit()
+    }
+
+    if (runPackageScripts) {
+      const dependencyManager = this.#getDependencyManager(dependencyManagers)
       this.log(`using ${dependencyManager}`)
 
-      this.#runGitInit()
-      this.#runPackageJsonScripts(dependencyManager)
+      this.#runPackageScripts(dependencyManager)
     }
 
     this.#runGoodBye()
