@@ -4,22 +4,22 @@ env:
 
 extends: ['eslint:recommended', 'standard', 'prettier']
 
-overrides":
+overrides:
   [
     {
       env: { node: true },
-      files: ['.eslintrc.{js,cjs}'],
+      files: ['generators/**/.eslintrc.{js,cjs}'],
       parserOptions: { sourceType: 'script' },
     },
     {
-      files: ['src/**/*.js'],
+      files: ['generators/**/src/**/*.js'],
       extends: ['plugin:jsdoc/recommended', 'xo'],
       plugins: ['jsdoc'],
       rules: { 'jsdoc/tag-lines': 0 },
     },
     {
       env: { node: true },
-      files: ['__tests__/**/*.js'],
+      files: ['__tests__/**/*.js', 'generators/**/__tests__/*.js'],
       extends: ['plugin:jest/recommended'],
       plugins: ['jest'],
       rules: { 'jest/expect-expect': 0 },
