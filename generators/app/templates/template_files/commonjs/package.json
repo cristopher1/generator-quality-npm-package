@@ -1,3 +1,14 @@
+<% 
+  const getKeywords = (keywords) => {
+    const length = keywords.length
+    if (length !== 0) {
+      for(let i = 0; i < length - 1; i++) { %>
+    "<%= keywords[i] %>",<% } %>
+    "<%= keywords[length - 1] %>"
+  <% }
+  }
+%>
+
 {
   "name": "<%= packageName %>",
   "version": "1.0.0",
@@ -43,26 +54,14 @@
     "quality-check": "npm run format && npm run lint && npm run test"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cristopher1/json-serializer-vue-localstorage-reactive.git"
+    "url": "<%= urlRepository %>"
   },
-  "keywords": [
-    "wrapper",
-    "json-serializer",
-    "json-serializer-core",
-    "json-serializer-base-serializers",
-    "vue-localstorage-reactive",
-    "local",
-    "storage",
-    "serialize",
-    "unserialize",
-    "serializer"
-  ],
+  "keywords": [<% getKeywords(keywords) %>],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cristopher1/json-serializer-vue-localstorage-reactive/issues"
+    "url": "<% if(urlRepository){ %> <%= urlRepository %>/issues <% } %>"
   },
-  "homepage": "https://github.com/cristopher1/json-serializer-vue-localstorage-reactive#readme",
+  "homepage": "<%= packageWebsite %>",
   "dependencies": {
     "@babel/runtime-corejs3": "^7.22.11",
     "core-js": "^3.32.1"
