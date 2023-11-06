@@ -28,35 +28,43 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('generator-quality-npm-package:app', () => {
   describe('commonjs', () => {
-    it('Should create the project structure correctly', async () => {
-      // Arrange
-      const baseStructure = getBaseStructure()
-      const commojsBaseStructure = getCommonjsStructure()
-      const commonjsStructure = [...baseStructure, ...commojsBaseStructure]
+    describe('Should create the project structure correctly when', () => {
+      it('The runGitInit and runPackageScripts options are not used', async () => {
+        // Arrange
+        const baseStructure = getBaseStructure()
+        const commojsBaseStructure = getCommonjsStructure()
+        const commonjsStructure = [...baseStructure, ...commojsBaseStructure]
 
-      // Act
-      await helpers
-        .run(path.join(__dirname, '../generators/app'))
-        .withPrompts({ runCommands: false })
+        // Act
+        await helpers
+          .run(path.join(__dirname, '../generators/app'))
+          .withPrompts({ runGitInit: false, runPackageScripts: false })
 
-      // Assert
-      assert.file(commonjsStructure)
+        // Assert
+        assert.file(commonjsStructure)
+      })
     })
   })
   describe('esmodules', () => {
-    it('Should create the project structure correctly', async () => {
-      // Arrange
-      const baseStructure = getBaseStructure()
-      const esmodulesBaseStructure = getEsmodulesStructure()
-      const esmodulesStructure = [...baseStructure, ...esmodulesBaseStructure]
+    describe('Should create the project structure correctly when', () => {
+      it('The runGitInit and runPackageScripts options are not used', async () => {
+        // Arrange
+        const baseStructure = getBaseStructure()
+        const esmodulesBaseStructure = getEsmodulesStructure()
+        const esmodulesStructure = [...baseStructure, ...esmodulesBaseStructure]
 
-      // Act
-      await helpers
-        .run(path.join(__dirname, '../generators/app'))
-        .withPrompts({ packageType: 'module', runCommands: false })
+        // Act
+        await helpers
+          .run(path.join(__dirname, '../generators/app'))
+          .withPrompts({
+            packageType: 'module',
+            runGitInit: false,
+            runPackageScripts: false,
+          })
 
-      // Assert
-      assert.file(esmodulesStructure)
+        // Assert
+        assert.file(esmodulesStructure)
+      })
     })
   })
 })
