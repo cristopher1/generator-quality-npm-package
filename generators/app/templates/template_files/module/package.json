@@ -20,7 +20,7 @@
       "require": "./dist/cjs/index.cjs"
   },
   "files": [
-    "./dist"
+    "dist"
   ],
   "author": {
     "name": "<%= authorName %>",
