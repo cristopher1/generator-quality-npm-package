@@ -25,7 +25,7 @@
   "author": {
     "name": "<%= authorName %>",
     "email": "<%= authorEmail %>",
-    "url": "<%= authorHomePage %>"
+    "url": "<%= authorHomepage %>"
   },
   "scripts": {
     "init:husky": "husky install",
@@ -55,7 +55,6 @@
     "url": "<%= urlRepository %>"
   },
   "keywords": [<% getKeywords(keywords) %>],
-  "license": "MIT",
   "bugs": {
     "url": "<% if(urlRepository){ %> <%= urlRepository %>/issues <% } %>"
   },

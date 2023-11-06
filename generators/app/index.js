@@ -1,8 +1,12 @@
 import Generator from 'yeoman-generator'
 import chalk from 'chalk'
 import yosay from 'yosay'
+import { createRequire } from 'node:module'
 
-export default class extends Generator {
+const require = createRequire(import.meta.url)
+const generatorLicense = require('generator-license/app')
+
+export default class GeneratorQualityNpmPackage extends Generator {
   #getKeywords(packageKeywords) {
     const keywords = packageKeywords.split(',')
 
@@ -153,7 +157,7 @@ export default class extends Generator {
       },
       {
         type: 'input',
-        name: 'authorHomePage',
+        name: 'authorHomepage',
         message: "Author's homepage",
         default: '',
       },
@@ -228,6 +232,18 @@ export default class extends Generator {
     ]
 
     this.answers = await this.prompt(prompts)
+
+    this.composeWith(
+      {
+        Generator: generatorLicense,
+        path: require.resolve('generator-license'),
+      },
+      {
+        name: this.answers.authorName,
+        email: this.answers.authorEmail,
+        website: this.answers.authorHomepage,
+      },
+    )
   }
 
   writing() {
