@@ -3,6 +3,16 @@ import chalk from 'chalk'
 import yosay from 'yosay'
 
 export default class extends Generator {
+  #getKeywords(packageKeywords) {
+    const keywords = packageKeywords.split(',')
+
+    // There are not keywords
+    if (keywords.length === 1 && keywords[0] === '') {
+      return []
+    }
+    return keywords
+  }
+
   #copyNormalFilesAndDirectories(src, dst = '') {
     // Copy all directories. It does not include the dotfiles.
     this.fs.copy(this.templatePath(`${src}/**/*`), this.destinationPath(dst))
@@ -121,43 +131,41 @@ export default class extends Generator {
         type: 'input',
         name: 'packageDescription',
         message: "Project's description",
-        default: '',
       },
       {
         type: 'input',
         name: 'packageHomePageUrl',
         message: 'Project homepage url',
-        default: '',
       },
       {
         type: 'input',
         name: 'authorName',
         message: "Author's name",
-        default: '',
       },
       {
         type: 'input',
         name: 'authorEmail',
         message: "Author's email",
-        default: '',
       },
       {
         type: 'input',
         name: 'authorHomePage',
         message: "Author's homepage",
-        default: '',
+      },
+      {
+        type: 'input',
+        name: 'urlRepository',
+        message: 'Github repository url',
       },
       {
         type: 'input',
         name: 'packageKeywords',
         message: 'Package keywords (comman to split)',
-        default: '',
       },
       {
         type: 'input',
-        name: 'yourWebSite',
-        message: 'Your website',
-        default: '',
+        name: 'packageWebsite',
+        message: 'Your package website',
       },
       {
         type: 'list',
@@ -196,8 +204,7 @@ export default class extends Generator {
       {
         type: 'list',
         name: 'runPackageScripts',
-        message: `Do you want to run the package scripts that init,
-          test and build the package automatically, then installing the dependencies`,
+        message: `Do you want to run the configuration package scripts automatically, then installing the dependencies`,
         choices: [
           {
             name: 'yes',
@@ -221,6 +228,8 @@ export default class extends Generator {
 
     const { packageType } = this.answers
     this.#copyTypePackageContent(packageType)
+
+    this.answers.keywords = this.#getKeywords(this.answers.packageKeywords)
 
     const templateFiles = `template_files/${packageType}`
     this.#copyNormalTemplates(templateFiles, this.answers)
