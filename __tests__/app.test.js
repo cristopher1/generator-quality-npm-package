@@ -1,7 +1,12 @@
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import { jest } from '@jest/globals'
 import assert from 'yeoman-assert'
 import helpers from 'yeoman-test'
+
+jest.mock('generator-license/app', () => {
+  return helpers.createDummyGenerator()
+})
 
 const getBaseStructure = () => [
   '__tests__/helpers/index.js',
