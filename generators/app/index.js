@@ -1,10 +1,10 @@
 import Generator from 'yeoman-generator'
 import chalk from 'chalk'
 import yosay from 'yosay'
+import generatorLicense from 'generator-license/app/index.js'
 import { createRequire } from 'node:module'
 
 const require = createRequire(import.meta.url)
-const generatorLicense = require('generator-license/app')
 
 export default class GeneratorQualityNpmPackage extends Generator {
   #getKeywords(packageKeywords) {
@@ -236,7 +236,7 @@ export default class GeneratorQualityNpmPackage extends Generator {
     this.composeWith(
       {
         Generator: generatorLicense,
-        path: require.resolve('generator-license'),
+        path: require.resolve('generator-license/app'),
       },
       {
         name: this.answers.authorName,
