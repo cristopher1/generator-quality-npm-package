@@ -60,7 +60,6 @@
     "readme-md-generator": "^1.0.0",
     "rimraf": "^5.0.1",
     "rollup": "^3.28.0",
-    "rollup-plugin-dts": "^6.1.0",
     "typescript": "^5.2.2",
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^8.2.0"
