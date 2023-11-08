@@ -1,12 +1,25 @@
 import Generator from 'yeoman-generator'
 import chalk from 'chalk'
 import yosay from 'yosay'
-import generatorLicense from 'generator-license/app/index.js'
 import { createRequire } from 'node:module'
+import { GeneratorProvider } from './generator_components/GeneratorProvider.js'
+import { PromptBuilder } from './generator_components/PromptBuilder.js'
+
+import GeneratorLicense from 'generator-license/app/index.js'
 
 const require = createRequire(import.meta.url)
 
 export default class GeneratorQualityNpmPackage extends Generator {
+  #promptBuilder
+  #generatorProvider
+
+  constructor(args, opts) {
+    super(args, opts)
+
+    this.#promptBuilder = new PromptBuilder()
+    this.#generatorProvider = new GeneratorProvider()
+  }
+
   #getKeywords(packageKeywords) {
     const keywords = packageKeywords.split(',')
 
@@ -15,53 +28,6 @@ export default class GeneratorQualityNpmPackage extends Generator {
       return []
     }
     return keywords
-  }
-
-  #copyNormalFilesAndDirectories(src, dst = '') {
-    // Copy all directories. It does not include the dotfiles.
-    this.fs.copy(this.templatePath(`${src}/**/*`), this.destinationPath(dst))
-  }
-
-  #copyDotFiles(src, dst = '') {
-    // Copy all directories. It includes the dotfiles.
-    this.fs.copy(this.templatePath(`${src}/**/.*`), this.destinationPath(dst))
-  }
-
-  #copyDotDirectories(src, dst = '') {
-    // Copy all dotdirectories. It does not include the dotfiles.
-    this.fs.copy(this.templatePath(`${src}/.**/*`), this.destinationPath(dst))
-  }
-
-  #copyNormalTemplates(src, templateData, dst = '') {
-    this.fs.copyTpl(
-      this.templatePath(`${src}/**/*`),
-      this.destinationPath(dst),
-      templateData,
-    )
-  }
-
-  #copyCommonStructureContent(rootDir) {
-    this.#copyNormalFilesAndDirectories(rootDir)
-    this.#copyDotFiles(rootDir)
-    this.#copyDotDirectories(rootDir)
-  }
-
-  #copyTypePackageContent(packageType) {
-    switch (packageType) {
-      case 'esmodules':
-        this.#copyEsModuleContent(packageType)
-        break
-      default:
-        this.#copyCommonjsContent(packageType)
-    }
-  }
-
-  #copyCommonjsContent(rootDir) {
-    this.#copyNormalFilesAndDirectories(rootDir)
-  }
-
-  #copyEsModuleContent(rootDir) {
-    this.#copyNormalFilesAndDirectories(rootDir)
   }
 
   #runGitInit() {
@@ -115,6 +81,8 @@ export default class GeneratorQualityNpmPackage extends Generator {
   }
 
   async prompting() {
+    const promptBuilder = this.#promptBuilder
+
     // Have Yeoman greet the user.
     this.log(
       yosay(
@@ -124,118 +92,14 @@ export default class GeneratorQualityNpmPackage extends Generator {
       ),
     )
 
-    const prompts = [
-      {
-        type: 'input',
-        name: 'packageName',
-        message: "Project's name",
-        default: this.appname,
-      },
-      {
-        type: 'input',
-        name: 'packageDescription',
-        message: "Project's description",
-        default: '',
-      },
-      {
-        type: 'input',
-        name: 'packageHomePageUrl',
-        message: 'Project homepage url',
-        default: '',
-      },
-      {
-        type: 'input',
-        name: 'authorName',
-        message: "Author's name",
-        default: '',
-      },
-      {
-        type: 'input',
-        name: 'authorEmail',
-        message: "Author's email",
-        default: '',
-      },
-      {
-        type: 'input',
-        name: 'authorHomepage',
-        message: "Author's homepage",
-        default: '',
-      },
-      {
-        type: 'input',
-        name: 'urlRepository',
-        message: 'Github repository url',
-        default: '',
-      },
-      {
-        type: 'input',
-        name: 'packageKeywords',
-        message: 'Package keywords (comman to split)',
-        default: '',
-      },
-      {
-        type: 'input',
-        name: 'packageWebsite',
-        message: 'Your package website',
-        default: '',
-      },
-      {
-        type: 'list',
-        name: 'packageType',
-        message:
-          'Do you want to use the field type:commonjs or type:module into package.json',
-        choices: [
-          {
-            name: 'commonjs',
-            value: 'commonjs',
-          },
-          {
-            name: 'module',
-            value: 'module',
-          },
-        ],
-        default: 'commonjs',
-      },
-      {
-        type: 'list',
-        name: 'runGitInit',
-        message:
-          'Do you want to run git init automatically, then installing the dependencies',
-        choices: [
-          {
-            name: 'yes',
-            value: true,
-          },
-          {
-            name: 'no',
-            value: false,
-          },
-        ],
-        default: true,
-      },
-      {
-        type: 'list',
-        name: 'runPackageScripts',
-        message: `Do you want to run the configuration package scripts automatically, then installing the dependencies`,
-        choices: [
-          {
-            name: 'yes',
-            value: true,
-          },
-          {
-            name: 'no',
-            value: false,
-          },
-        ],
-        default: true,
-      },
-    ]
+    promptBuilder.setOptions({ appname: this.appname })
+    const prompts = promptBuilder.build()
 
     this.answers = await this.prompt(prompts)
 
     this.composeWith(
       {
-        Generator: generatorLicense,
+        Generator: GeneratorLicense,
         path: require.resolve('generator-license/app'),
       },
       {
@@ -247,19 +111,75 @@ export default class GeneratorQualityNpmPackage extends Generator {
   }
 
   writing() {
-    const commonStructure = 'common_structure'
-    this.#copyCommonStructureContent(commonStructure)
-
-    const { packageType } = this.answers
-    this.#copyTypePackageContent(packageType)
-
-    this.answers.keywords = this.#getKeywords(this.answers.packageKeywords)
-
-    const templateFiles = `template_files/${packageType}`
-    this.#copyNormalTemplates(templateFiles, this.answers)
+    this.fs.copy(this.templatePath('./src/**/*'), this.destinationPath('src'))
   }
 
-  install() {}
+  #addGit() {
+    const generator = this.#generatorProvider.getGitGenerator()
+    this.composeWith(generator)
+  }
+
+  #addEslint() {
+    const generator = this.#generatorProvider.getEslintGenerator()
+    this.composeWith(generator)
+  }
+
+  #addHusky() {
+    const generator = this.#generatorProvider.getHuskyGenerator()
+    this.composeWith(generator)
+  }
+
+  #addLintStaged() {
+    const generator = this.#generatorProvider.getLintStagedGenerator()
+    this.composeWith(generator)
+  }
+
+  #addPrettier() {
+    const generator = this.#generatorProvider.getPrettierGenerator()
+    this.composeWith(generator)
+  }
+
+  #addTypeScript() {
+    const generator = this.#generatorProvider.getTypeScriptGenerator()
+    this.composeWith(generator)
+  }
+
+  #addBabel(options) {
+    const generator = this.#generatorProvider.getBabelGenerator()
+    this.composeWith(generator, options)
+  }
+
+  #addJest(options) {
+    const generator = this.#generatorProvider.getJestGenerator()
+    this.composeWith(generator, options)
+  }
+
+  #addCommitLint(options) {
+    const generator = this.#generatorProvider.getCommitLintGenerator()
+    this.composeWith(generator, options)
+  }
+
+  #addRollup(options) {
+    const generator = this.#generatorProvider.getRollupGenerator()
+    this.composeWith(generator, options)
+  }
+
+  default() {
+    const { packageType } = this.answers
+    const packageConfig = packageType === 'module' ? { esmodules: true } : {}
+
+    this.#addGit()
+    this.#addEslint()
+    this.#addHusky()
+    this.#addLintStaged()
+    this.#addPrettier()
+    this.#addTypeScript()
+
+    this.#addBabel(packageConfig)
+    this.#addJest(packageConfig)
+    this.#addCommitLint(packageConfig)
+    this.#addRollup(packageConfig)
+  }
 
   end() {
     const dependencyManagers = ['yarn', 'npm']
