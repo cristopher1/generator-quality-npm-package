@@ -22,7 +22,7 @@ overrides:
       files: ['__tests__/**/*.js', 'generators/jest/**/*.js'],
       extends: ['plugin:jest/recommended'],
       plugins: ['jest'],
-      rules: { 'jest/expect-expect': 0 },
+      rules: { 'jest/expect-expect': 0, 'jest/no-template-curly-in-string' },
     },
   ]
 
