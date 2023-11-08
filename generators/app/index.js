@@ -119,11 +119,14 @@ export default class GeneratorQualityNpmPackage extends Generator {
 
   #getKeywords(packageKeywords) {
     const keywords = packageKeywords.split(',')
+    const keywordsWithoutSpaces = keywords.map((elemenet) => {
+      return elemenet.trim()
+    })
 
-    if (keywords.length === 1 && keywords[0] === '') {
+    if (keywordsWithoutSpaces.length === 1 && keywordsWithoutSpaces[0] === '') {
       return []
     }
-    return keywords
+    return keywordsWithoutSpaces
   }
 
   conflicts() {
