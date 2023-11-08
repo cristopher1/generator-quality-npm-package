@@ -111,6 +111,22 @@ export class PromptBuilder {
         ],
         default: true,
       },
+      {
+        type: 'list',
+        name: 'includeLicense',
+        message: 'Do you want to use a lincese for this package?',
+        choices: [
+          {
+            name: 'yes',
+            value: true,
+          },
+          {
+            name: 'no',
+            value: false,
+          },
+        ],
+        default: false,
+      },
     ]
   }
 }

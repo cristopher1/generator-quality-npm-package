@@ -8,6 +8,7 @@ import GeneratorPrettier from '../../prettier/index.js'
 import GeneratorTypeScript from '../../typescript/index.js'
 import GeneratorCommitLint from '../../commitlint/index.js'
 import GeneratorRollup from '../../rollup/index.js'
+import GeneratorLicense from 'generator-license/app/index.js'
 
 import { createRequire } from 'node:module'
 
@@ -81,6 +82,13 @@ export class GeneratorProvider {
     return {
       Generator: GeneratorRollup,
       path: require.resolve('../../rollup'),
+    }
+  }
+
+  getLicenseGenerator() {
+    return {
+      Generator: GeneratorLicense,
+      path: require.resolve('generator-license/app'),
     }
   }
 }
