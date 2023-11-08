@@ -1,18 +1,9 @@
-<% 
-  const getKeywords = (keywords) => {
-    const length = keywords.length
-    if (length !== 0) {
-      for(let i = 0; i < length - 1; i++) { %>
-    "<%= keywords[i] %>",<% } %>
-    "<%= keywords[length - 1] %>"
-  <% }
-  }
-%>{
-  "name": "<%= packageName %>",
+{
+  "name": "",
   "version": "1.0.0",
-  "description": "<%= packageDescription %>",
+  "description": "",
   "main": "./dist/cjs/index.cjs",
-  "type": "<%= packageType %>",
+  "type": "",
   "types": "./dist/types/index.d.ts",
   "exports": {
       "types": "./dist/types/index.d.ts",
@@ -23,9 +14,9 @@
     "dist"
   ],
   "author": {
-    "name": "<%= authorName %>",
-    "email": "<%= authorEmail %>",
-    "url": "<%= authorHomepage %>"
+    "name": "",
+    "email": "",
+    "url": ""
   },
   "scripts": {
     "init:husky": "husky install",
@@ -52,13 +43,13 @@
     "quality-check": "npm run format && npm run lint && npm run test"
   },
   "repository": {
-    "url": "<%= urlRepository %>"
+    "url": ""
   },
-  "keywords": [<% getKeywords(keywords) %>],
+  "keywords": [],
   "bugs": {
-    "url": "<% if(urlRepository){ %> <%= urlRepository %>/issues <% } %>"
+    "url": ""
   },
-  "homepage": "<%= packageWebsite %>",
+  "homepage": "",
   "dependencies": {
     "@babel/runtime-corejs3": "^7.22.11",
     "core-js": "^3.32.1"
