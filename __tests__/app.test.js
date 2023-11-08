@@ -360,60 +360,62 @@ describe('generator-quality-npm-package:app', () => {
           .run(path.join(__dirname, '../generators/app'))
           .withPrompts(answers)
       })
-      it('package.json', () => {
-        // Assert
-        assert.JSONFileContent('package.json', {
-          name: answers.packageName,
-          version: '1.0.0',
-          description: answers.packageDescription,
-          main: './dist/cjs/index.cjs',
-          type: 'module',
-          types: './dist/types/index.d.ts',
-          exports: {
+      describe('package.json', () => {
+        it('Should create a package.json adding the required fields', () => {
+          // Assert
+          assert.JSONFileContent('package.json', {
+            name: answers.packageName,
+            version: '1.0.0',
+            description: answers.packageDescription,
+            main: './dist/cjs/index.cjs',
+            type: 'module',
             types: './dist/types/index.d.ts',
-            import: './dist/esm/index.mjs',
-            require: './dist/cjs/index.cjs',
-          },
-          files: ['dist'],
-          author: {
-            name: answers.authorName,
-            email: answers.authorEmail,
-            url: answers.authorHomepage,
-          },
-          scripts: {
-            'init:husky': 'husky install',
-            'documentation:create': 'npx readme-md-generator -y',
-            init: 'npm run init:husky',
-            format: 'prettier --check .',
-            'format:fix': 'prettier --write .',
-            'format:build-stage': 'prettier --check src',
-            'format:build-stage:fix': 'prettier --write src',
-            lint: 'eslint --ext .js,.mjs .',
-            'lint:fix': 'npm run lint -- --fix',
-            'lint:build-stage': 'eslint --ext .js,.mjs src',
-            'lint:build-stage:fix': 'npm run lint:build-stage -- --fix',
-            'build:clean': 'rimraf dist',
-            'build:clean-dist-tmp': 'rimraf dist/tmp',
-            'build:bundle': 'rollup --config',
-            'build:tsc': 'tsc',
-            prebuild:
-              'npm run lint:build-stage && npm run format:build-stage:fix && npm run build:clean',
-            build:
-              'npm run build:tsc && npm run build:bundle && npm run build:clean-dist-tmp',
-            test: 'node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose',
-            commitlint: 'npx commitlint --edit',
-            'lint-staged': 'npx lint-staged',
-            prepublishOnly: 'npm run build',
-            'quality-check': 'npm run format && npm run lint && npm run test',
-          },
-          repository: {
-            url: '',
-          },
-          keywords: ['keyword1', 'keyword2'],
-          bugs: {
-            url: '',
-          },
-          homepage: answers.packageWebsite,
+            exports: {
+              types: './dist/types/index.d.ts',
+              import: './dist/esm/index.mjs',
+              require: './dist/cjs/index.cjs',
+            },
+            files: ['dist'],
+            author: {
+              name: answers.authorName,
+              email: answers.authorEmail,
+              url: answers.authorHomepage,
+            },
+            scripts: {
+              'init:husky': 'husky install',
+              'documentation:create': 'npx readme-md-generator -y',
+              init: 'npm run init:husky',
+              format: 'prettier --check .',
+              'format:fix': 'prettier --write .',
+              'format:build-stage': 'prettier --check src',
+              'format:build-stage:fix': 'prettier --write src',
+              lint: 'eslint --ext .js,.mjs .',
+              'lint:fix': 'npm run lint -- --fix',
+              'lint:build-stage': 'eslint --ext .js,.mjs src',
+              'lint:build-stage:fix': 'npm run lint:build-stage -- --fix',
+              'build:clean': 'rimraf dist',
+              'build:clean-dist-tmp': 'rimraf dist/tmp',
+              'build:bundle': 'rollup --config',
+              'build:tsc': 'tsc',
+              prebuild:
+                'npm run lint:build-stage && npm run format:build-stage:fix && npm run build:clean',
+              build:
+                'npm run build:tsc && npm run build:bundle && npm run build:clean-dist-tmp',
+              test: 'node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose',
+              commitlint: 'npx commitlint --edit',
+              'lint-staged': 'npx lint-staged',
+              prepublishOnly: 'npm run build',
+              'quality-check': 'npm run format && npm run lint && npm run test',
+            },
+            repository: {
+              url: '',
+            },
+            keywords: ['keyword1', 'keyword2'],
+            bugs: {
+              url: '',
+            },
+            homepage: answers.packageWebsite,
+          })
         })
       })
 
