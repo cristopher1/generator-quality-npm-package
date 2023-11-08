@@ -1,5 +1,5 @@
 import { faker } from './helpers'
-import { getGreeting } from '../../../app/templates/src/index.js'
+import { getGreeting } from '../src/index.js'
 
 const filePath = 'src/index.js'
 
