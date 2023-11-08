@@ -8,9 +8,7 @@ export default class GeneratorQualityNpmPackage extends Generator {
   #promptBuilder
   #generatorProvider
 
-  constructor(args, opts) {
-    super(args, opts)
-
+  initializing() {
     this.#promptBuilder = new PromptBuilder()
     this.#generatorProvider = new GeneratorProvider()
   }
