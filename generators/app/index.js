@@ -23,7 +23,6 @@ export default class GeneratorQualityNpmPackage extends Generator {
   #getKeywords(packageKeywords) {
     const keywords = packageKeywords.split(',')
 
-    // There are not keywords
     if (keywords.length === 1 && keywords[0] === '') {
       return []
     }
@@ -111,7 +110,36 @@ export default class GeneratorQualityNpmPackage extends Generator {
   }
 
   writing() {
-    this.fs.copy(this.templatePath('./src/**/*'), this.destinationPath('src'))
+    this.fs.copy(this.templatePath('./**/*'), this.destinationPath(''))
+
+    this.packageJson.merge({
+      name: this.answers.packageName,
+      description: this.answers.packageDescription,
+      type: this.answers.packageType,
+      author: {
+        name: this.answers.authorName,
+        email: this.answers.authorEmail,
+        url: this.answers.authorHomepage,
+      },
+      repository: {
+        url: this.answers.urlRepository,
+      },
+      bugs: {
+        url: this.answers.urlRepository
+          ? `${this.answers.urlRepository}/issues`
+          : '',
+      },
+      keywords: this.#getKeywords(this.answers.packageKeywords),
+      homepage: this.answers.packageWebsite,
+    })
+
+    if (this.answers.packageType === 'module') {
+      this.packageJson.merge({
+        scripts: {
+          test: 'node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose',
+        },
+      })
+    }
   }
 
   #addGit() {
