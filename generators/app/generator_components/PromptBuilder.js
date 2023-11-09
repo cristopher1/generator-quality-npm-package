@@ -98,7 +98,7 @@ export class PromptBuilder {
       {
         type: 'list',
         name: 'runPackageScripts',
-        message: `Do you want to run the configuration package scripts automatically, then installing the dependencies`,
+        message: `Do you want to automatically run the scripts that configure the package, then installing the dependencies`,
         choices: [
           {
             name: 'yes',
