@@ -65,7 +65,7 @@ export class PromptBuilder {
         type: 'list',
         name: 'packageType',
         message:
-          'Do you want to use the field type:commonjs or type:module into package.json',
+          'Do you want to use the field type:commonjs or type:module into package.json?',
         choices: [
           {
             name: 'commonjs',
@@ -82,7 +82,7 @@ export class PromptBuilder {
         type: 'list',
         name: 'runGitInit',
         message:
-          'Do you want to run git init automatically, then installing the dependencies',
+          'Do you want to run git init automatically, then installing the dependencies?',
         choices: [
           {
             name: 'yes',
@@ -98,7 +98,7 @@ export class PromptBuilder {
       {
         type: 'list',
         name: 'runPackageScripts',
-        message: `Do you want to automatically run the scripts that configure the package, then installing the dependencies`,
+        message: `Do you want to automatically run the scripts that configure the package, then installing the dependencies?`,
         choices: [
           {
             name: 'yes',
