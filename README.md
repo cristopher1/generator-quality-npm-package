@@ -17,18 +17,6 @@
 
 ### 🏠 [Homepage](https://github.com/cristopher1/generator-quality-npm-package)
 
-### [Index](#index)
-
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [The configuration files](#configuration-files)
-- [The scripts in package.json](#scripts)
-- [Getting To Know Yeoman](#know-yeoman)
-- [Author](#author)
-- [Contributing](#contributing)
-- [Show your support](#support)
-- [License](#license)
-
 The `generator-quality-npm-package` provides a structure to create a npm package similar to that used in the: [@cljmenez/json-serializer-vue-localstorage-reactive](https://www.npmjs.com/package/@cljimenez/json-serializer-vue-localstorage-reactive), [@cljimenez/json-serializer-core](https://www.npmjs.com/package/@cljimenez/json-serializer-core) and [@cljimenez/json-serializer-base-serializers](https://www.npmjs.com/package/@cljimenez/json-serializer-base-serializers). **The generator is useful when to create npm package that contains all source code transpiled into an only file**.
 
 The structure created by this generator includes:
@@ -47,6 +35,18 @@ The structure created by this generator includes:
 - [Readme-md-generator](https://github.com/kefranabg/readme-md-generator)
 - [Husky](https://www.npmjs.com/package/husky)
 - Others
+
+### [Index](#index)
+
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [The configuration files](#configuration-files)
+- [The scripts in package.json](#scripts)
+- [Getting To Know Yeoman](#know-yeoman)
+- [Author](#author)
+- [Contributing](#contributing)
+- [Show your support](#support)
+- [License](#license)
 
 ## <a id="prerequisites"></a> Prerequisites
 
