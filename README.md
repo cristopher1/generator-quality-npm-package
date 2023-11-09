@@ -72,13 +72,9 @@ yo quality-npm-package
 The configuration files included are:
 
 - Eslint: `.eslintignore` (the files and directories ignored by eslint) and `.eslintrc.json` (configuration used by eslint).
-  
 - Git: `.gitignore` (the files and directories ignored by git).
-  
 - Lint-staged: `.lintstagedrc.json` (configuration used by lint-staged).
-  
 - Prettier: `.prettierignore` (the files and directories ignored by prettier) and `.prettierrc.json` (configuration used by prettier).
-  
 - Babel: `babel.config.json` (configuration used by babel):
 
   - The `env.buildCommonjs` contains the configuration used to transpile the source code to es5. It is used into `rollup.config.js` and `rollup.config.mjs`.
@@ -100,35 +96,20 @@ The configuration files included are:
 The more important scripts added into the package.json created by this generator are:
 
 - `"init"`: Runs the commands necessary to initialize the package, for example `init:husky`. It executed automatically when `Do you want to automatically run the scripts that configure the package, then installing the dependencies?` is yes.
-  
 - `"documentation:create"`: Creates documentation using readme-md-generator. It executed automatically when `Do you want to automatically run the scripts that configure the package, then installing the dependencies?` is yes.
-  
 - `"format"`: Checks the format using prettier.
-  
 - `"format:fix"`: Fixes the format using prettier.
-  
 - `"format:build-stage"` and `"format:build-stage:fix"`: similar to `"format"` and `"format:fix"`. They used when the `npm run build` is called.
-  
 - `"lint"`: static code analysis using eslint.
-  
 - `"lint:fix"`: Fixes the code using eslint.
-  
 - `"lint:build-stage"` and `"lint:build-stage:fix"`: similar to `"lint"` and `"lint:fix"`. They are used when the `npm run build` is called.
-  
 - `"build:bundle"`: Bundles the files into src folder using rollup. It is used when the `npm run build` is called.
-  
 - `"build:tsc"`: Generates .d.ts files using the TypeScript compilator. It is used when the `npm run build` is called.
-  
 - `"build"`: Generates the dist folder, that contains the cjs folder (source code transpiled to es5), the esm folder (source code transpiled to es6), and types folder (it contains the declaration files).
-  
 - `"prepublishOnly"`: Used before publishing your package using `npm publish`. Runs `npm run build`.
-  
 - `"test"`: Runs the tests using jest.
-  
 - `"commitlint"`: Runs commitlint. It is used into .husky/commit-msg file. It is called by the commit-msg hook. See [git hook](https://www.atlassian.com/git/tutorials/git-hooks#:~:text=The%20commit%2Dmsg%20hook%20is,file%20that%20contains%20the%20message.).
-  
 - `"lint-staged"`: Runs lint-staged. It is used into .husky/pre-commit file. It is called by the pre-commit hook. See [git hook](https://www.atlassian.com/git/tutorials/git-hooks#:~:text=The%20commit%2Dmsg%20hook%20is,file%20that%20contains%20the%20message.).
-  
 - `"quality-check"`: Runs `npm run format && npm run lint && npm run test`. It is used into .husky/pre-push file. It is called by the pre-push hook See [git hook](https://www.atlassian.com/git/tutorials/git-hooks#:~:text=The%20commit%2Dmsg%20hook%20is,file%20that%20contains%20the%20message.).
 
 ## <a id="know-yeoman"></a> Getting To Know Yeoman
