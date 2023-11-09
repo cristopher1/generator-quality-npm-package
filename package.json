@@ -31,7 +31,13 @@
     "commitlint",
     "husky",
     "jsdoc",
-    "readme-md-generator"
+    "readme-md-generator",
+    "rollup",
+    "lint-staged",
+    "jest",
+    "jsdoc",
+    "quality npm package",
+    "git hooks"
   ],
   "devDependencies": {
     "@babel/cli": "^7.22.10",
