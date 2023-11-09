@@ -37,7 +37,14 @@
     "jest",
     "jsdoc",
     "quality npm package",
-    "git hooks"
+    "git hooks",
+    "es5",
+    "es6",
+    "declaration files",
+    "tsc",
+    "git",
+    "pre-commit",
+    "pre-push"
   ],
   "devDependencies": {
     "@babel/cli": "^7.22.10",
