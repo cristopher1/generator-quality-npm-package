@@ -13,8 +13,8 @@ export default class GeneratorCommitLint extends Generator {
     const { packageType } = this
 
     this.fs.copy(
-      this.templatePath(`./${packageType}/*`),
-      this.destinationPath(''),
+      this.templatePath(`${packageType}/commitlint.config.js`),
+      this.destinationPath('commitlint.config.js'),
     )
   }
 }

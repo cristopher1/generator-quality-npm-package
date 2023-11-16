@@ -13,8 +13,8 @@ export default class GeneratorBabel extends Generator {
     const { packageType } = this
 
     this.fs.copy(
-      this.templatePath(`./${packageType}/*`),
-      this.destinationPath(''),
+      this.templatePath(`${packageType}/babel.config.json`),
+      this.destinationPath('babel.config.json'),
     )
   }
 }
