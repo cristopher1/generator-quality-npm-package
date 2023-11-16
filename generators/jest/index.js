@@ -13,13 +13,13 @@ export default class GeneratorJset extends Generator {
     const { packageType } = this
 
     this.fs.copy(
-      this.templatePath('./__tests__/**/*'),
+      this.templatePath('__tests__/**/*'),
       this.destinationPath('__tests__'),
     )
 
     this.fs.copy(
-      this.templatePath(`./${packageType}/*`),
-      this.destinationPath(''),
+      this.templatePath(`${packageType}/jest.config.js`),
+      this.destinationPath('jest.config.js'),
     )
   }
 }

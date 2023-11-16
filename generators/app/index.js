@@ -114,7 +114,14 @@ export default class GeneratorQualityNpmPackage extends Generator {
   }
 
   writing() {
-    this.fs.copy(this.templatePath('./**/*'), this.destinationPath(''))
+    this.fs.copy(
+      this.templatePath('src/index.js'),
+      this.destinationPath('src/index.js'),
+    )
+    this.fs.copy(
+      this.templatePath('package.json'),
+      this.destinationPath('package.json'),
+    )
   }
 
   #getKeywords(packageKeywords) {

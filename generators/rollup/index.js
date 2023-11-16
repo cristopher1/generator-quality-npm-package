@@ -13,7 +13,7 @@ export default class GeneratorRollup extends Generator {
     const { packageType } = this
 
     this.fs.copy(
-      this.templatePath(`./${packageType}/*`),
+      this.templatePath(`${packageType}/*`),
       this.destinationPath(''),
     )
   }
