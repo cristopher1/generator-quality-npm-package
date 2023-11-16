@@ -1,6 +1,6 @@
 {
   "name": "generator-quality-npm-package",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Yeoman generator to create quality npm packages with eslint, prettier, commitlint, husky, babel and other tools.",
   "homepage": "https://github.com/cristopher1/generator-quality-npm-package",
   "author": {
