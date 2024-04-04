@@ -31,76 +31,76 @@ export default class GeneratorQualityNpmPackage extends Generator {
     this.answers = await this.prompt(prompts)
   }
 
-  #addGit() {
+  async #addGit() {
     const generator = this.#generatorProvider.getGitGenerator()
-    this.composeWith(generator)
+    await this.composeWith(generator)
   }
 
-  #addEslint() {
+  async #addEslint() {
     const generator = this.#generatorProvider.getEslintGenerator()
-    this.composeWith(generator)
+    await this.composeWith(generator)
   }
 
-  #addHusky() {
+  async #addHusky() {
     const generator = this.#generatorProvider.getHuskyGenerator()
-    this.composeWith(generator)
+    await this.composeWith(generator)
   }
 
-  #addLintStaged() {
+  async #addLintStaged() {
     const generator = this.#generatorProvider.getLintStagedGenerator()
-    this.composeWith(generator)
+    await this.composeWith(generator)
   }
 
-  #addPrettier() {
+  async #addPrettier() {
     const generator = this.#generatorProvider.getPrettierGenerator()
-    this.composeWith(generator)
+    await this.composeWith(generator)
   }
 
-  #addTypeScript() {
+  async #addTypeScript() {
     const generator = this.#generatorProvider.getTypeScriptGenerator()
-    this.composeWith(generator)
+    await this.composeWith(generator)
   }
 
-  #addBabel(options) {
+  async #addBabel(options) {
     const generator = this.#generatorProvider.getBabelGenerator()
-    this.composeWith(generator, options)
+    await this.composeWith(generator, options)
   }
 
-  #addJest(options) {
+  async #addJest(options) {
     const generator = this.#generatorProvider.getJestGenerator()
-    this.composeWith(generator, options)
+    await this.composeWith(generator, options)
   }
 
-  #addCommitLint(options) {
+  async #addCommitLint(options) {
     const generator = this.#generatorProvider.getCommitLintGenerator()
-    this.composeWith(generator, options)
+    await this.composeWith(generator, options)
   }
 
-  #addRollup(options) {
+  async #addRollup(options) {
     const generator = this.#generatorProvider.getRollupGenerator()
-    this.composeWith(generator, options)
+    await this.composeWith(generator, options)
   }
 
-  #addLicense(options) {
+  async #addLicense(options) {
     const generator = this.#generatorProvider.getLicenseGenerator()
-    this.composeWith(generator, options)
+    await this.composeWith(generator, options)
   }
 
-  configuring() {
+  async configuring() {
     const { packageType, includeLicense } = this.answers
     const packageConfig = packageType === 'module' ? { esmodules: true } : {}
 
-    this.#addGit()
-    this.#addEslint()
-    this.#addHusky()
-    this.#addLintStaged()
-    this.#addPrettier()
-    this.#addTypeScript()
+    await this.#addGit()
+    await this.#addEslint()
+    await this.#addHusky()
+    await this.#addLintStaged()
+    await this.#addPrettier()
+    await this.#addTypeScript()
 
-    this.#addBabel(packageConfig)
-    this.#addJest(packageConfig)
-    this.#addCommitLint(packageConfig)
-    this.#addRollup(packageConfig)
+    await this.#addBabel(packageConfig)
+    await this.#addJest(packageConfig)
+    await this.#addCommitLint(packageConfig)
+    await this.#addRollup(packageConfig)
 
     if (includeLicense) {
       const licenseOptions = {
@@ -109,7 +109,7 @@ export default class GeneratorQualityNpmPackage extends Generator {
         website: this.answers.authorHomepage,
       }
 
-      this.#addLicense(licenseOptions)
+      await this.#addLicense(licenseOptions)
     }
   }
 

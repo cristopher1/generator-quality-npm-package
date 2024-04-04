@@ -1,6 +1,6 @@
 {
   "name": "generator-quality-npm-package",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Yeoman generator to create quality npm packages with eslint, prettier, commitlint, husky, babel and other tools.",
   "homepage": "https://github.com/cristopher1/generator-quality-npm-package",
   "author": {
@@ -79,9 +79,6 @@
     "yeoman-assert": "^3.1.1",
     "yeoman-environment": "^4.0.0",
     "yeoman-test": "^8.2.0"
-  },
-  "engines": {
-    "npm": ">= 4.0.0"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.22.11",
